@@ -21,10 +21,6 @@ def prmntrvls(Lwr,Upr):
 
             control += 1
 
-    PrimeList = [x for x in NumList if x not in Bin]
-
-    return PrimeList
+    return [x for x in NumList if x not in Bin]
 
 print(prmntrvls(2,100))
-
-print(len(prmntrvls(2,100)))
