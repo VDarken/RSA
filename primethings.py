@@ -42,19 +42,44 @@ def phi(a,b):
 
     return (a - 1)*(b - 1)
 
+def gcd(Num1,Num2):
+
+    if Num1 < Num2:
+
+        Num1, Num2 = Num2, Num1
+ 
+    Rmndr = Num1 % Num2
+ 
+    if Rmndr == 0:
+
+        return Num2
+ 
+    return gcd(Num2,Rmndr)
+
+
 Lwr = 1
 
-Upr = 1000
+Upr = 12
 
 FrstPrmNmbr = secrets.choice(prmntrvls(Lwr, Upr))
 
 ScndPrmNmbr = secrets.choice(prmntrvls(Lwr, Upr))
 
-NmbrVIP = FrstPrmNmbr*ScndPrmNmbr
+FrstPK = FrstPrmNmbr*ScndPrmNmbr
 
-EulerPhi = phi(FrstPrmNmbr,ScndPrmNmbr)
+UprNmbr = phi(FrstPrmNmbr,ScndPrmNmbr)
+
+CoPrimesList = []
+
+for i in range(1,UprNmbr + 1):
+
+    if gcd(UprNmbr,i) == 1:
+
+        CoPrimesList.append(i)
+
+ScndPK = max(CoPrimesList)
 
 print(f'El intervalo seleccionado es: [{Lwr},{Upr}].')
 print(f'Los números primos aleatorios son: {FrstPrmNmbr} y {ScndPrmNmbr}.')
-print(f'El número VIP es: {NmbrVIP}.')
-print(f'El número de Euler es: {EulerPhi}.')
+print(f'La clave pública es: ({FrstPK},{ScndPK})')
+        
