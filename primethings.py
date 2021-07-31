@@ -11,15 +11,15 @@ def prmntrvls(Lwr,Upr):
 
     for Num in NumList:
 
-        control = 2
+        Control = 2
 
-        while control <= Num**0.5:
+        while Control <= Num**0.5:
 
-            if Num % control == 0:
+            if Num % Control == 0:
 
                 Bin.append(Num)
 
-            control += 1
+            Control += 1
 
     return [x for x in NumList if x not in Bin]
 
