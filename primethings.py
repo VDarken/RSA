@@ -5,9 +5,9 @@ from functools import lru_cache
 
 def prmntrvls(Lwr,Upr):
 
-    Bin = []
-
     NumList = [nbr for nbr in range(Lwr,Upr+1)]
+
+    Bin = []
 
     for Num in NumList:
 
@@ -21,6 +21,8 @@ def prmntrvls(Lwr,Upr):
 
             Control += 1
 
-    return [x for x in NumList if x not in Bin]
+    PrimeList = [x for x in NumList if x not in Bin]
 
-print(prmntrvls(2,100))
+    return PrimeList 
+
+print(prmntrvls(2,10))
