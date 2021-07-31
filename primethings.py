@@ -1,28 +1,49 @@
 
 from functools import lru_cache
 
+import secrets
+ 
+
 @lru_cache()
 
 def prmntrvls(Lwr,Upr):
 
-    NumList = [nbr for nbr in range(Lwr,Upr+1)]
+    PrimeList = []
 
-    Bin = []
+    NumList = [x for x in range(Lwr,Upr+1)]
 
     for Num in NumList:
 
-        Control = 2
+        if prm(Num) == True:
 
-        while Control <= Num**0.5:
+            PrimeList.append(Num)
 
-            if Num % Control == 0:
+    return PrimeList
 
-                Bin.append(Num)
+def prm(Num):
 
-            Control += 1
+    if Num <= 1:
 
-    PrimeList = [x for x in NumList if x not in Bin]
+        return False
 
-    return PrimeList 
+    control = 2
 
-print(prmntrvls(2,10))
+    while control <= Num**0.5:
+
+        if Num % control == 0:
+
+            return False
+
+        control += 1
+
+    return True
+
+Lwr = 1
+
+Upr = 1000
+
+FrstNmbr = secrets.choice(prmntrvls(Lwr, Upr))
+
+ScndNmbr = secrets.choice(prmntrvls(Lwr, Upr))
+
+print('El intervalo seleccionado es: [{},{}]. \nLos números primos aleatorios (clave privada) son: {} y {}. \nLa clave pública es: {}.'.format(Lwr,Upr,FrstNmbr,ScndNmbr,FrstNmbr*ScndNmbr))
