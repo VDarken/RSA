@@ -3,37 +3,28 @@ from functools import lru_cache
 
 @lru_cache()
 
-
 def prmntrvls(Lwr,Upr):
 
-    PrimeList = []
+    Bin = []
 
-    NumList = [x for x in range(Lwr,Upr+1)]
+    NumList = [nbr for nbr in range(Lwr,Upr+1)]
 
     for Num in NumList:
 
-        if is_prime(Num) == True:
+        control = 2
 
-            PrimeList.append(Num)
+        while control <= Num**0.5:
+
+            if Num % control == 0:
+
+                Bin.append(Num)
+
+            control += 1
+
+    PrimeList = [x for x in NumList if x not in Bin]
 
     return PrimeList
 
-def is_prime(Num):
-    
-    if Num <= 1:
+print(prmntrvls(2,100))
 
-        return False
-
-    control = 2
-
-    while control <= Num**0.5:
-
-        if Num % control == 0:
-
-            return False
-
-        control += 1
-
-    return True
-
-print(prmntrvls(1,150))
+print(len(prmntrvls(2,100)))
