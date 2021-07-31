@@ -38,12 +38,23 @@ def prm(Num):
 
     return True
 
+def phi(a,b):
+
+    return (a - 1)*(b - 1)
+
 Lwr = 1
 
 Upr = 1000
 
-FrstNmbr = secrets.choice(prmntrvls(Lwr, Upr))
+FrstPrmNmbr = secrets.choice(prmntrvls(Lwr, Upr))
 
-ScndNmbr = secrets.choice(prmntrvls(Lwr, Upr))
+ScndPrmNmbr = secrets.choice(prmntrvls(Lwr, Upr))
 
-print('El intervalo seleccionado es: [{},{}]. \nLos números primos aleatorios (clave privada) son: {} y {}. \nLa clave pública es: {}.'.format(Lwr,Upr,FrstNmbr,ScndNmbr,FrstNmbr*ScndNmbr))
+NmbrVIP = FrstPrmNmbr*ScndPrmNmbr
+
+EulerPhi = phi(FrstPrmNmbr,ScndPrmNmbr)
+
+print(f'El intervalo seleccionado es: [{Lwr},{Upr}].')
+print(f'Los números primos aleatorios son: {FrstPrmNmbr} y {ScndPrmNmbr}.')
+print(f'El número VIP es: {NmbrVIP}.')
+print(f'El número de Euler es: {EulerPhi}.')
