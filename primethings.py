@@ -2,7 +2,6 @@
 from functools import lru_cache
 
 import secrets
- 
 
 @lru_cache()
 
@@ -56,16 +55,15 @@ def gcd(Num1,Num2):
  
     return gcd(Num2,Rmndr)
 
-
 Lwr = 1
 
-Upr = 12
+Upr = 1000
 
 FrstPrmNmbr = secrets.choice(prmntrvls(Lwr, Upr))
 
 ScndPrmNmbr = secrets.choice(prmntrvls(Lwr, Upr))
 
-FrstPK = FrstPrmNmbr*ScndPrmNmbr
+FrstPubKey = FrstPrmNmbr*ScndPrmNmbr
 
 UprNmbr = phi(FrstPrmNmbr,ScndPrmNmbr)
 
@@ -77,9 +75,36 @@ for i in range(1,UprNmbr + 1):
 
         CoPrimesList.append(i)
 
-ScndPK = max(CoPrimesList)
+ScndPubKey = max(CoPrimesList)
 
 print(f'El intervalo seleccionado es: [{Lwr},{Upr}].')
+
 print(f'Los números primos aleatorios son: {FrstPrmNmbr} y {ScndPrmNmbr}.')
-print(f'La clave pública es: ({FrstPK},{ScndPK})')
-        
+
+print(f'La clave pública es: ({FrstPubKey},{ScndPubKey})')
+
+for j in range(1,UprNmbr + 1):
+
+    if (j * ScndPubKey) % UprNmbr == 1:
+
+        PrivKey = j
+
+print(f'La clave privada es: {PrivKey}')
+
+Strng = input('Message: ')
+
+NmbrsMsg = int(''.join(format(ord(c), 'b') for c in Strng))
+
+# Mensaje codificado en formato de número
+
+CddMsg = (NmbrsMsg**ScndPubKey) % FrstPubKey
+
+print(f'El mensaje codificado (número) es: {CddMsg}')
+
+# Mensaje decodificado en formato de número
+
+DcdMsg = (CddMsg**PrivKey) % FrstPubKey
+
+print(f'El mensaje decodificado (número) es: {DcdMsg}')
+
+
