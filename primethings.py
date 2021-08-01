@@ -1,6 +1,8 @@
 
 from functools import lru_cache
 
+from string import ascii_lowercase 
+
 import secrets
 
 @lru_cache()
@@ -91,20 +93,22 @@ for j in range(1,UprNmbr + 1):
 
 print(f'La clave privada es: {PrivKey}')
 
+mapping = dict(zip(ascii_lowercase, range(1, 27)))
+
 Strng = input('Message: ')
 
-NmbrsMsg = int(''.join(format(ord(c), 'b') for c in Strng))
+NmbrsMsg = [str(mapping[char]) for char in Strng if char in mapping]
 
-# Mensaje codificado en formato de número
+print(f'La lista de números asociados al mensaje es: {NmbrsMsg}')
 
-CddMsg = (NmbrsMsg**ScndPubKey) % FrstPubKey
+NmbrsMsgFull = int(''.join(NmbrsMsg))
 
-print(f'El mensaje codificado (número) es: {CddMsg}')
+print(f'El número asociado al mensaje es: {NmbrsMsgFull}')
 
-# Mensaje decodificado en formato de número
+CddMsg = (NmbrsMsgFull**ScndPubKey) % FrstPubKey
+
+print(f'El mensaje codificado es: {CddMsg}')
 
 DcdMsg = (CddMsg**PrivKey) % FrstPubKey
 
-print(f'El mensaje decodificado (número) es: {DcdMsg}')
-
-
+print(f'El mensaje decodificado es: {DcdMsg}')
