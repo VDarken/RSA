@@ -1,11 +1,15 @@
 
-from functools import lru_cache
+from functools import lru_cache     # Para que los datos se guarden en la caché.
 
-from string import ascii_lowercase 
+from string import ascii_lowercase  # Para pasar a números el mensaje.
 
-import secrets
+import secrets                      # Para elegir aleatoriamente los primos.
 
 @lru_cache()
+
+#################################################################################################################################
+
+# Selección del intervalo de números y creación de la lista de números primos.
 
 def prmntrvls(Lwr,Upr):
 
@@ -39,9 +43,17 @@ def prm(Num):
 
     return True
 
+#################################################################################################################################
+
+# Función que calcula el número "s" (cota superior). 
+
 def phi(a,b):
 
     return (a - 1)*(b - 1)
+
+#################################################################################################################################
+
+# Función que calcula el máximo común divisor de dos números.
 
 def gcd(Num1,Num2):
 
@@ -57,17 +69,40 @@ def gcd(Num1,Num2):
  
     return gcd(Num2,Rmndr)
 
+#################################################################################################################################
+
+# Establecimiento de las cotas superior e inferior del intervalo de números.
+
 Lwr = 1
 
 Upr = 1000
+
+#################################################################################################################################
+
+# Elección aleatoria de los números primos sobre los que se construye el codificado del mensaje.
 
 FrstPrmNmbr = secrets.choice(prmntrvls(Lwr, Upr))
 
 ScndPrmNmbr = secrets.choice(prmntrvls(Lwr, Upr))
 
+#################################################################################################################################
+
+# Primera parte de la clave pública (el producto de los dos números primos anteriores).
+
 FrstPubKey = FrstPrmNmbr*ScndPrmNmbr
 
+#################################################################################################################################
+
+# Cálculo del número "s" (cota superior).
+
 UprNmbr = phi(FrstPrmNmbr,ScndPrmNmbr)
+
+#################################################################################################################################
+
+# Segunda parte de la clave pública. Se elige el máximo número coprimo con UprNmbr (el número cota superior), en un intervalo 
+# entre 1 y UprNmbr.
+
+# Nota: el máximo común divisor entre dos números coprimos es igual a 1.
 
 CoPrimesList = []
 
@@ -79,11 +114,20 @@ for i in range(1,UprNmbr + 1):
 
 ScndPubKey = max(CoPrimesList)
 
+#################################################################################################################################
+
+# Impresión por pantalla de los datos calculados hasta el momento: el intervalo seleccionado, los números primos seleccionados 
+# aleatorioamente y la clave pública.
+
 print(f'El intervalo seleccionado es: [{Lwr},{Upr}].')
 
 print(f'Los números primos aleatorios son: {FrstPrmNmbr} y {ScndPrmNmbr}.')
 
 print(f'La clave pública es: ({FrstPubKey},{ScndPubKey})')
+
+#################################################################################################################################
+
+# Creación de la clave privada (PrivKey). 
 
 for j in range(1,UprNmbr + 1):
 
@@ -93,21 +137,33 @@ for j in range(1,UprNmbr + 1):
 
 print(f'La clave privada es: {PrivKey}')
 
-mapping = dict(zip(ascii_lowercase, range(1, 27)))
+#################################################################################################################################
+
+# Introducción por pantalla del mensaje para codificar y asociación de este a un número.
 
 Strng = input('Message: ')
 
-NmbrsMsg = [str(mapping[char]) for char in Strng if char in mapping]
+mapping = dict(zip(ascii_lowercase, range(1, 27)))
+
+NmbrsMsg = [str(mapping[char]) for char in Strng if char in mapping]        # Mensaje codificado por números en forma de lista. 
 
 print(f'La lista de números asociados al mensaje es: {NmbrsMsg}')
 
-NmbrsMsgFull = int(''.join(NmbrsMsg))
+NmbrsMsgFull = int(''.join(NmbrsMsg))                                       # Mensaje codificado en forma de único número.
 
 print(f'El número asociado al mensaje es: {NmbrsMsgFull}')
+
+#################################################################################################################################
+
+# Codificación del mensaje a partir de su número asociado. 
 
 CddMsg = (NmbrsMsgFull**ScndPubKey) % FrstPubKey
 
 print(f'El mensaje codificado es: {CddMsg}')
+
+#################################################################################################################################
+
+# Decodificación del mensaje a partir del número codificado.
 
 DcdMsg = (CddMsg**PrivKey) % FrstPubKey
 
