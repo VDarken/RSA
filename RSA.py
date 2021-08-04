@@ -145,26 +145,26 @@ Strng = input('Message: ')
 
 mapping = dict(zip(ascii_lowercase, range(1, 27)))
 
-NmbrsMsg = [str(mapping[char]) for char in Strng if char in mapping]        # Mensaje codificado por números en forma de lista. 
+NmbrsMsg = [int(mapping[char]) for char in Strng if char in mapping]        # Mensaje codificado por números en forma de lista. 
 
-print(f'La lista de números asociados al mensaje es: {NmbrsMsg}')
-
-NmbrsMsgFull = int(''.join(NmbrsMsg))                                       # Mensaje codificado en forma de único número.
-
-print(f'El número asociado al mensaje es: {NmbrsMsgFull}')
+print(f'La lista de números asociados al mensaje es: {NmbrsMsg}',len(NmbrsMsg))
 
 #################################################################################################################################
 
 # Codificación del mensaje a partir de su número asociado. 
 
-CddMsg = (NmbrsMsgFull**ScndPubKey) % FrstPubKey
+CddMsg = [(x**ScndPubKey) % FrstPubKey for x in NmbrsMsg]                      
 
-print(f'El mensaje codificado es: {CddMsg}')
+print(f'El mensaje codificado es: {CddMsg}',len(CddMsg))
 
 #################################################################################################################################
 
 # Decodificación del mensaje a partir del número codificado.
 
-DcdMsg = (CddMsg**PrivKey) % FrstPubKey
+DcdMsg = [(x**PrivKey) % FrstPubKey for x in CddMsg]         
 
-print(f'El mensaje decodificado es: {DcdMsg}')
+print(f'El mensaje decodificado es: {DcdMsg}',len(DcdMsg))
+
+
+
+
